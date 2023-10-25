@@ -17,7 +17,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  // MyHomePage(Key key, this.title) : super(key: key);
+  MyHomePage({
+    super.key,
+    required this.title,
+  });
   final String title;
 
   @override
@@ -34,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // is true will show the numeric keyboard.
   bool isNumericMode = false;
 
-  TextEditingController _controllerText;
+  late TextEditingController _controllerText;
 
   @override
   void initState() {
@@ -86,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   textController: _controllerText,
                   //customLayoutKeys: _customLayoutKeys,
                   defaultLayouts: [
-                    VirtualKeyboardDefaultLayouts.Arabic,
+                    VirtualKeyboardDefaultLayouts.Russian,
                     VirtualKeyboardDefaultLayouts.English
                   ],
                   //reverseLayout :true,
@@ -104,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
   /// Fired when the virtual keyboard key is pressed.
   _onKeyPress(VirtualKeyboardKey key) {
     if (key.keyType == VirtualKeyboardKeyType.String) {
-      text = text + (shiftEnabled ? key.capsText : key.text);
+      text = text + (shiftEnabled ? key.capsText! : key.text!);
     } else if (key.keyType == VirtualKeyboardKeyType.Action) {
       switch (key.action) {
         case VirtualKeyboardKeyAction.Backspace:
@@ -115,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
           text = text + '\n';
           break;
         case VirtualKeyboardKeyAction.Space:
-          text = text + key.text;
+          text = text + key.text!;
           break;
         case VirtualKeyboardKeyAction.Shift:
           shiftEnabled = !shiftEnabled;
