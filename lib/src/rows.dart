@@ -78,27 +78,30 @@ List<List<VirtualKeyboardKey>> _getKeyboardRows(
 /// Returns a list of VirtualKeyboard rows with `VirtualKeyboardKey` objects.
 List<List<VirtualKeyboardKey>> _getKeyboardRowsNumeric() {
   // Generate lists for each keyboard row.
-  return List.generate(_keyRowsNumeric.length, (int rowNum) {
-    // Will contain the keyboard row keys.
-    List<VirtualKeyboardKey> rowKeys = [];
+  return List.generate(
+    _keyRowsNumeric.length,
+    (int rowNum) {
+      // Will contain the keyboard row keys.
+      List<VirtualKeyboardKey> rowKeys = [];
 
-    // We have to add Action keys to keyboard.
-    switch (rowNum) {
-      case 3:
-        // String keys.
-        rowKeys.addAll(_getKeyboardRowKeysNumeric(rowNum));
+      // We have to add Action keys to keyboard.
+      switch (rowNum) {
+        case 3:
+          // String keys.
+          rowKeys.addAll(_getKeyboardRowKeysNumeric(rowNum));
 
-        // Right Shift
-        rowKeys.add(
-          VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Backspace),
-        );
-        break;
-      default:
-        rowKeys = _getKeyboardRowKeysNumeric(rowNum);
-    }
+          // Right Shift
+          rowKeys.add(
+            VirtualKeyboardKey(
+                keyType: VirtualKeyboardKeyType.Action,
+                action: VirtualKeyboardKeyAction.Backspace),
+          );
+          break;
+        default:
+          rowKeys = _getKeyboardRowKeysNumeric(rowNum);
+      }
 
-    return rowKeys;
-  });
+      return rowKeys;
+    },
+  );
 }

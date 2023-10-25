@@ -10,14 +10,18 @@ class VirtualKeyboardKey {
   VirtualKeyboardKey(
       {this.text, this.capsText, required this.keyType, this.action}) {
     if (this.text == null && this.action != null) {
-      this.text = action == VirtualKeyboardKeyAction.Space
-          ? ' '
-          : (action == VirtualKeyboardKeyAction.Return ? '\n' : '');
+      if (action == VirtualKeyboardKeyAction.Space) {
+        this.text = ' ';
+      } else {
+        this.text = (action == VirtualKeyboardKeyAction.Return ? '\n' : '');
+      }
     }
     if (this.capsText == null && this.action != null) {
-      this.capsText = action == VirtualKeyboardKeyAction.Space
-          ? ' '
-          : (action == VirtualKeyboardKeyAction.Return ? '\n' : '');
+      if (action == VirtualKeyboardKeyAction.Space) {
+        this.capsText = ' ';
+      } else {
+        this.capsText = (action == VirtualKeyboardKeyAction.Return ? '\n' : '');
+      }
     }
   }
 }
