@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:virtual_keyboard_multi_language/virtual_keyboard_multi_language.dart';
 
 void main() => runApp(MyApp());
@@ -58,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               text,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             Text(
               _controllerText.text,
@@ -82,22 +83,29 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(),
             ),
             Container(
-              color: Colors.deepPurple,
+              color: Color.fromARGB(255, 244, 244, 244),
               child: VirtualKeyboard(
-                  height: 300,
-                  //width: 500,
-                  textColor: Colors.white,
-                  textController: _controllerText,
-                  //customLayoutKeys: _customLayoutKeys,
-                  defaultLayouts: [
-                    VirtualKeyboardDefaultLayouts.Russian,
-                    VirtualKeyboardDefaultLayouts.English
-                  ],
-                  //reverseLayout :true,
-                  type: isNumericMode
-                      ? VirtualKeyboardType.Numeric
-                      : VirtualKeyboardType.Alphanumeric,
-                  onKeyPress: _onKeyPress),
+                builder: (context, key) {
+                  return KeyBuilder(
+                    virtualKey: key,
+                    onKeyPress: _onKeyPress,
+                  );
+                },
+                height: 260,
+                keyRowsAlignment: MainAxisAlignment.center,
+                //width: 500,
+                textColor: Colors.white,
+                textController: _controllerText,
+                defaultLayouts: [
+                  VirtualKeyboardDefaultLayouts.Russian,
+                  VirtualKeyboardDefaultLayouts.English
+                ],
+                //reverseLayout :true,
+                type: isNumericMode
+                    ? VirtualKeyboardType.Numeric
+                    : VirtualKeyboardType.Alphanumeric,
+                onKeyPress: _onKeyPress,
+              ),
             )
           ],
         ),
@@ -124,10 +132,107 @@ class _MyHomePageState extends State<MyHomePage> {
         case VirtualKeyboardKeyAction.Shift:
           shiftEnabled = !shiftEnabled;
           break;
+        case VirtualKeyboardKeyAction.AllCaps:
+          break;
         default:
+          break;
       }
     }
     // Update the screen
     setState(() {});
+  }
+}
+
+class KeyBuilder extends StatelessWidget {
+  final VirtualKeyboardKey virtualKey;
+  final Function(VirtualKeyboardKey) onKeyPress;
+
+  const KeyBuilder({
+    required this.virtualKey,
+    super.key,
+    required this.onKeyPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color textColor = Colors.black;
+    double keyWidth = 48;
+    Icon actionKey = Icon(Icons.arrow_upward, color: textColor);
+
+    if (virtualKey.keyType == VirtualKeyboardKeyType.Action) {
+      keyWidth = 96;
+      switch (virtualKey.action) {
+        case VirtualKeyboardKeyAction.Shift:
+          actionKey = Icon(Icons.arrow_upward, color: textColor);
+          break;
+        case VirtualKeyboardKeyAction.Space:
+          keyWidth = 240;
+          actionKey = actionKey = Icon(Icons.space_bar, color: textColor);
+          break;
+        case VirtualKeyboardKeyAction.Return:
+          actionKey = Icon(
+            Icons.keyboard_return,
+            color: textColor,
+          );
+          break;
+        case VirtualKeyboardKeyAction.SwitchLanguage:
+          actionKey = Icon(
+            Icons.language,
+            color: textColor,
+          );
+          break;
+        case null:
+          break;
+        case VirtualKeyboardKeyAction.Backspace:
+          actionKey = Icon(Icons.backspace);
+          break;
+        case VirtualKeyboardKeyAction.AllCaps:
+          actionKey = Icon(Icons.keyboard_double_arrow_up_sharp);
+          break;
+      }
+    }
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 2.5, horizontal: 2.5),
+      decoration: BoxDecoration(
+        border: Border.all(color: Color.fromARGB(255, 183, 183, 183)),
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              Colors.white,
+              const Color.fromARGB(255, 224, 224, 224),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(3),
+        ),
+        child: InkWell(
+          customBorder: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3),
+          ),
+          onTap: () {
+            onKeyPress(virtualKey);
+          },
+          child: SizedBox(
+            width: keyWidth,
+            height: 48,
+            child: Center(
+              child: virtualKey.keyType == VirtualKeyboardKeyType.Action
+                  ? actionKey
+                  : Text(
+                      virtualKey.text!.toUpperCase(),
+                      style: GoogleFonts.roboto(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

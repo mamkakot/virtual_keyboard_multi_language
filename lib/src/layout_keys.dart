@@ -102,24 +102,10 @@ const List<List> _defaultEnglishLayout = [
   ]
 ];
 
-const List<List> _defaultRussianLayout = [
+List<List> _defaultRussianLayout = [
   // Row 1
   const [
     'ё',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '0',
-    '-',
-  ],
-  // Row 2
-  const [
     'й',
     'ц',
     'у',
@@ -132,7 +118,6 @@ const List<List> _defaultRussianLayout = [
     'з',
     'х',
     'ъ',
-    VirtualKeyboardKeyAction.Backspace
   ],
   // Row 3
   const [
@@ -147,7 +132,6 @@ const List<List> _defaultRussianLayout = [
     'д',
     'ж',
     'э',
-    VirtualKeyboardKeyAction.Return
   ],
   // Row 4
   const [
@@ -160,12 +144,10 @@ const List<List> _defaultRussianLayout = [
     'ь',
     'б',
     'ю',
-    '.',
   ],
   // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
+  [
     VirtualKeyboardKeyAction.Space,
-    '_',
+    VirtualKeyboardKeyAction.Backspace
   ]
 ];
