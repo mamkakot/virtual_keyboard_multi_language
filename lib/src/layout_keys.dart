@@ -105,6 +105,19 @@ const List<List> _defaultEnglishLayout = [
 List<List> _defaultRussianLayout = [
   // Row 1
   const [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '0',
+  ],
+  // Row 2
+  const [
     'ё',
     'й',
     'ц',
@@ -146,8 +159,5 @@ List<List> _defaultRussianLayout = [
     'ю',
   ],
   // Row 5
-  [
-    VirtualKeyboardKeyAction.Space,
-    VirtualKeyboardKeyAction.Backspace
-  ]
+  [VirtualKeyboardKeyAction.Space, VirtualKeyboardKeyAction.Backspace]
 ];
